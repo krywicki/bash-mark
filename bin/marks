@@ -2,9 +2,7 @@
 #
 # Description Bookmark current directory
 
-BASHMARK_DIR="${BASHMARK_DIR:-$HOME/.local/share/bashmark}"
-BASHMARK_MARKS_DIR="$BASHMARK_DIR/marks"
-
+MARKS_DIR="$HOME/.local/share/bashmark/marks"
 MARK=""
 TARGET="$(pwd)"
 
@@ -24,4 +22,5 @@ while [[ $# -gt 0 ]]; do
 done
 
 ## List bookmarks
-ls -l "$BASHMARK_MARKS_DIR" | grep -o "\S* -> \S*"
+mkdir -p "$MARKS_DIR"
+ls -l "$MARKS_DIR" | grep -o "\S* -> \S*"

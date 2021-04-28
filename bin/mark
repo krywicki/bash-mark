@@ -1,10 +1,6 @@
 #!/bin/sh
-#
-# Remove bookmark
 
-BASHMARK_DIR="${BASHMARK_DIR:-$HOME/.local/share/bashmark}"
-BASHMARK_MARKS_DIR="$BASHMARK_DIR/marks"
-
+MARKS_DIR="$HOME/.local/share/bashmark/marks"
 MARK=""
 TARGET="$(pwd)"
 
@@ -13,17 +9,22 @@ while [[ $# -gt 0 ]]; do
     key="$1"
 
     case $key in
-        ## Help
+        ## Target (default current dir)
+        -t|--target)
+            TARGET="$2"
+            shift
+            shift
+        ;;
+       ## Help
         -h|--help)
-            echo "unmark [OPTIONS] [MARK]"\
-            echo
-            echo "Remove bookmark"
+            echo "mark [OPTIONS] [MARK]"
             echo
             echo "Positional Parameters"
             echo "   MARK - Bookmark name for directory."
             echo
             echo "Optional Parameters"
             echo "  -h,--help   - Print help."
+            echo "  -t,--target - Target to bookmark. (default current directory)."
 
             exit 0
         ;;
@@ -36,4 +37,5 @@ while [[ $# -gt 0 ]]; do
 done
 
 ## Bookmark directory
-rm "$BASHMARK_MARKS_DIR/$MARK"
+mkdir -p "$MARKS_DIR"
+ln -s $TARGET "$MARKS_DIR/$MARK"
